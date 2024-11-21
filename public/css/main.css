@@ -1,0 +1,13 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background: #2E3439;
+    font-family: 'Inter', sans-serif;
+    color: white;
+}
+
+#page-content {
+    height: 100%;
+    width: 100%;
+}
