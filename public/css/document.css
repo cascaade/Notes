@@ -14,10 +14,16 @@
 #main-container {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 #canvas-container {
     flex-grow: 1;
+    overflow: auto;
+}
+
+#canvas-container::-webkit-scrollbar {
+    display: none;
 }
 
 #editor-container {
@@ -57,10 +63,11 @@ h3 {
 
 #document {
     border: 1px solid #363D42;
-    width: 80%;
+    width: 600px;
     margin: auto;
     margin-top: 40px;
-    padding: 12px;
+    margin-bottom: 40px;
+    padding: 42px;
     box-sizing: border-box;
     border-radius: 8px;
     background-color: #333A3F;
