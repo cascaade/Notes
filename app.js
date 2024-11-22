@@ -10,7 +10,19 @@ app.use(express.static('public'));
 require('dotenv').config();
 
 app.get('/document', (req, res) => {
-    res.render('document');
+    res.redirect('/document/edit');
+});
+
+app.get('/document/edit', (req, res) => {
+    res.render('document', {
+        editor: true,
+    });
+});
+
+app.get('/document/view', (req, res) => {
+    res.render('document', {
+        editor: false,
+    });
 });
 
 const PORT = process.env.PORT || 3000;

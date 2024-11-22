@@ -1,33 +1,39 @@
-// Handle Resizing
+// Load document -- mock code
 
-const editorContainer = document.getElementById('editor-container');
-const editor = document.getElementById('editor');
-const editorResizer = document.getElementById('editor-resizer');
-let editorResizing = false;
+// this code will eventually be embedded into ejs for security
 
-editorResizer.addEventListener('mousedown', (e) => {
-    editorResizing = true;
+function parseContent() {
+    // this is a dev doc
+    var doc = `Name: <% short_input %>\nCharacter: <% short_input %>\nQuestions: <% long_input %>`;
+    var returnCode = '';
+    
+    do {
+        queryIndex = doc.indexOf('<%');
 
-    document.body.style.cursor = 'ew-resize';
+        // add the string in-between the queries to the product
+        returnCode += doc.substring(0, queryIndex);
 
-    const width = editorContainer.getBoundingClientRect().width / window.innerWidth;
-    const initial = e.clientX / window.innerWidth;
+        var query = '';
+        let index = queryIndex + 2; // accounts for query length
+        do {
+            query += doc.charAt(index);
+            index += 1;
+        } while (index < doc.length && doc.charAt(index) + doc.charAt(index + 1) != '%>');
 
-    function handle(he) {
-        if (editorResizing) {
-            const delta = initial - he.clientX / window.innerWidth;
-            editorContainer.style.width = `${(width + delta) * 100}vw`;
+        var args = query.replaceAll(' ', '').split(';');
+
+        if (args[0] == 'short_input') {
+            returnCode += `<input class="document-interaction short-input" type="${args[1] || 'string'}"/>`
+        } else if (args[0] == 'long_input') {
+            returnCode += `<textarea class="document-interaction long-input"></textarea>`
+        } else {
+            returnCode += query
         }
-    }
 
-    function terminate() {
-        editorResizing = false;
-        document.removeEventListener('mouseup', terminate);
-        document.removeEventListener('mousemove', handle);
+        doc = doc.substring(index + 2); // loop adds 1 to index && index starts at 0, but length starts at 1
+    } while (doc.indexOf('<%') > -1);
 
-        document.body.style.cursor = 'unset';
-    }
+    return returnCode;
+}
 
-    document.addEventListener('mouseup', terminate);
-    document.addEventListener('mousemove', handle);
-});
+document.getElementById('document').innerHTML = parseContent();

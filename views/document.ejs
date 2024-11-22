@@ -18,15 +18,19 @@
             <div id="canvas-container">
                 <div id="document"></div>
             </div>
-            <div id="editor-container">
-                <div id="editor">
-                    <h3 id="editor-title">Editor</h3>
+            <% if (editor) { %>
+                <div id="editor-container">
+                    <div id="editor">
+                        <h3 id="editor-title">Editor</h3>
+                    </div>
+                    <div id="editor-resizer"></div>
                 </div>
-                <div id="editor-resizer"></div>
-            </div>
+            <% } %>
         </div>
     </div>
+    
     <script src="/js/document.js"></script>
+    <% if (editor) { %> <script src="/js/editor.js"></script> <% } %>
 </body>
 
 </html>
